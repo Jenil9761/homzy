@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: svchomzy
+spec:
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 80
+    nodePort: 32222
+  selector:
+    app: homzy
+  type: NodePort
+status:
+  loadBalancer: {}
