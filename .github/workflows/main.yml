@@ -113,7 +113,14 @@ jobs:
           git add .
           git commit -m "Update deployment to use image jenil9761/homzy:${{ github.run_number }}"
           git push
-
+          
+      - name: Set up Minikube
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
+          sudo apt-get install -y conntrack
+          minikube start --driver=docker
+          
       - name: Set up KUBECONFIG
         run: |
           mkdir -p ~/.minikube/profiles/minikube/
