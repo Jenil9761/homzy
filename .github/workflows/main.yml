@@ -29,8 +29,8 @@ jobs:
           context: .
           push: true
           tags: |
-            jenil9761/demogitaction:demo2
-            jenil9761/demogitaction:${{ github.run_number }}
+            jenil9761/homzy
+            jenil9761/homzy:${{ github.run_number }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Check out deployment repo
@@ -42,12 +42,12 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          sed -i "s|image: jenil9761/demogitaction:.*|image: jenil9761/demogitaction:${{ github.run_number }}|g" ymlfilrepo/deployment.yml
+          sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilrepo/deployment.yml
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           cd ymlfilerepo
           git add .
-          git commit -m "Update deployment to use image jenil9761/demogitaction:${{ github.run_number }}"
+          git commit -m "Update deployment to use image jenil9761/homzy:${{ github.run_number }}"
           git push
 
       - name: Apply Kubernetes deployment
