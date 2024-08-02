@@ -44,6 +44,11 @@ jobs:
       - name: Debug - List files in ymlfilerepo
         run: ls -R ymlfilerepo
 
+      - name: Configure Git user
+        run: |
+          git config --global user.email "jenill9761@gmail.com"
+          git config --global user.name "jenil9761"
+
       - name: Update Kubernetes deployment
         run: |
           sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilerepo/manifest/deployment.yml
