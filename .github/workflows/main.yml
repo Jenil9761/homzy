@@ -116,8 +116,8 @@ jobs:
 
       - name: Set up KUBECONFIG
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 -d > /.kube/config    #you have to give this file content /.kube/config in secrects with base64 encode use this command to get and put in secrets cat ~/.kube/config | base64
+          mkdir -p ~/.kube/
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config    #you have to give this file content /.kube/config in secrects with base64 encode use this command to get and put in secrets cat ~/.kube/config | base64
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f ymlfilerepo/manifest/deployment.yml
