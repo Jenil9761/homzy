@@ -57,7 +57,7 @@
 #           git commit -m "Update deployment to use image jenil9761/homzy:${{ github.run_number }}"
 #           git push
 
-
+##############################################################################################
 # name: Publish Docker image
 
 # on:
@@ -122,7 +122,7 @@
 #       - name: Apply Kubernetes deployment
 #         run: kubectl apply -f ymlfilerepo/manifest/deployment.yml
 
-
+################################################################################################
 name: Publish Docker image
 
 on:
@@ -182,10 +182,10 @@ jobs:
       - name: Set up KUBECONFIG
         run: |
           mkdir -p ~/.minikube/profiles/minikube/
-          mkdir -p ~/.kube/ 
-          echo "${{ secrets.MINIKUBE_CA_CRT }}" | base64 -d > ~/.minikube/ca.crt
           echo "${{ secrets.MINIKUBE_CLIENT_CRT }}" | base64 -d > ~/.minikube/profiles/minikube/client.crt
           echo "${{ secrets.MINIKUBE_CLIENT_KEY }}" | base64 -d > ~/.minikube/profiles/minikube/client.key
+          echo "${{ secrets.MINIKUBE_CA_CRT }}" | base64 -d > ~/.minikube/ca.crt
+          # mkdir -p ~/.kube/ 
           echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
 
       - name: Apply Kubernetes deployment
