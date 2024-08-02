@@ -103,7 +103,7 @@ jobs:
 
       - name: Configure Git user
         run: |
-          git config --global user.email "jenil9761@gmail.com""
+          git config --global user.email "jenil9761@gmail.com"
           git config --global user.name "jenil9761"
 
       - name: Update Kubernetes deployment
