@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5.5.1
         with:
-          images: jenil9761/demogitaction
+          images: jenil9761/homzy
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v6.3.0
@@ -42,7 +42,7 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilrepo/deployment.yml
+          sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilrepo/.deployment.yml
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           cd ymlfilerepo
