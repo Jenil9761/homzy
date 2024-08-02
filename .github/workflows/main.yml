@@ -42,9 +42,7 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilrepo/.deployment.yml
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          sed -i "s|image: jenil9761/homzy:.*|image: jenil9761/homzy:${{ github.run_number }}|g" ymlfilrepo/./deployment.yml
           cd ymlfilerepo
           git add .
           git commit -m "Update deployment to use image jenil9761/homzy:${{ github.run_number }}"
