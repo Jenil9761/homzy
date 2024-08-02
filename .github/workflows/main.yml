@@ -120,6 +120,10 @@ jobs:
           echo "${{ secrets.MINIKUBE_CLIENT_CRT }}" | base64 -d > ~/.minikube/profiles/minikube/client.crt
           echo "${{ secrets.MINIKUBE_CLIENT_KEY }}" | base64 -d > ~/.minikube/profiles/minikube/client.key
           echo "${{ secrets.MINIKUBE_CA_CRT }}" | base64 -d > ~/.minikube/ca.crt
+          kubectl config set-cluster minikube --certificate-authority=~/.minikube/ca.crt --embed-certs=true --server=https://$(minikube ip):8443
+          kubectl config set-credentials minikube --client-certificate=~/.minikube/profiles/minikube/client.crt --client-key=~/.minikube/profiles/minikube/client.key --embed-certs=true
+          kubectl config set-context minikube --cluster=minikube --user=minikube
+          kubectl config use-context minikube
           mkdir -p ~/.kube/ 
           echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
 
