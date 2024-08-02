@@ -56,8 +56,3 @@ jobs:
           git add .
           git commit -m "Update deployment to use image jenil9761/homzy:${{ github.run_number }}"
           git push
-
-      - name: Apply Kubernetes deployment
-        run: kubectl apply -f ymlfilerepo/manifest/deployment.yml
-        # env:
-        #   KUBECONFIG: ${{ secrets.KUBECONFIG }}
