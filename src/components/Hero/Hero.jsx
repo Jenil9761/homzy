@@ -18,7 +18,7 @@ const Hero = () => {
               type: "ease-in",
             }}
             >
-              Jenil <br />
+              Jenil 32<br />
               Most Suitable
               <br /> Property
             </motion.h1>
