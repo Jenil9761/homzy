@@ -1,0 +1,46 @@
+version: 2.1
+
+jobs:
+  docker_build_and_push:
+    docker:
+      - image: cimg/base:stable
+    resource_class: medium
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Docker login
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: Build Docker image
+          command: |
+            IMAGE_NAME="${DOCKER_IMAGE_NAME:-$DOCKER_USERNAME/homzy}"
+            docker build -t "$IMAGE_NAME:$CIRCLE_SHA1" .
+      - run:
+          name: Tag Docker image
+          command: |
+            IMAGE_NAME="${DOCKER_IMAGE_NAME:-$DOCKER_USERNAME/homzy}"
+            BRANCH_TAG="$(echo "$CIRCLE_BRANCH" | tr '/_' '--' | tr -cd '[:alnum:].-')"
+            docker tag "$IMAGE_NAME:$CIRCLE_SHA1" "$IMAGE_NAME:$BRANCH_TAG"
+
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+              docker tag "$IMAGE_NAME:$CIRCLE_SHA1" "$IMAGE_NAME:latest"
+            fi
+      - run:
+          name: Push Docker image
+          command: |
+            IMAGE_NAME="${DOCKER_IMAGE_NAME:-$DOCKER_USERNAME/homzy}"
+            BRANCH_TAG="$(echo "$CIRCLE_BRANCH" | tr '/_' '--' | tr -cd '[:alnum:].-')"
+            docker push "$IMAGE_NAME:$CIRCLE_SHA1"
+            docker push "$IMAGE_NAME:$BRANCH_TAG"
+
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+              docker push "$IMAGE_NAME:latest"
+            fi
+
+workflows:
+  build_and_push:
+    jobs:
+      - docker_build_and_push
